@@ -20,13 +20,13 @@ console.log("Root:", root.value);
 console.log("Right Child:", root.right?.value); // ? used for optimal searching to prevent crashes
 console.log("Left-Right Grandchild:", root.left?.right?.value); 
 
-
+// In - pre - post
 function Traversal(node) {
 
     if( node === null ) { 
         return;
     }
-    
+
     //recursion
     Traversal(node.left);
     Traversal(node.right);
@@ -35,4 +35,29 @@ function Traversal(node) {
 
 console.log(" In order Traversal");
 Traversal(root);
+
+// levelOrder
+
+function levelOrder(root) {
+
+    const queue = [];
+    queue.push(root);
+
+    while(queue.length > 0 ) {
+
+        const current = queue.shift();
+
+        console.log(current.value);
+
+        if(current.left !== null) {
+            queue.push(current.left);
+        }
+
+        if(current.right !== null) {
+            queue.push(current.right);
+        }
+    }
+}
+
+levelOrder(root);
 
