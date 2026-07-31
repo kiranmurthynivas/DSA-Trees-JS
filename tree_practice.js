@@ -6,58 +6,50 @@ class TreeNode {
     }
 }
 
-const root = new TreeNode(10);
 
-root.left = new TreeNode(5);
-root.right = new TreeNode(15);
-
-root.left.left = new TreeNode(2);
-root.left.right = new TreeNode(7);
-
-
-console.log("--- Tree Proof Check ---");
-console.log("Root:", root.value); 
-console.log("Right Child:", root.right?.value); // ? used for optimal searching to prevent crashes
-console.log("Left-Right Grandchild:", root.left?.right?.value); 
-
-// In - pre - post
-function Traversal(node) {
-
-    if( node === null ) { 
-        return;
+class BinarySearchTree {
+    constructor() {
+        this.root = null;
     }
 
-    //recursion
-    Traversal(node.left);
-    Traversal(node.right);
-    console.log(node.value);
-}
+    insert(value) {
+        const newNode = new TreeNode(value);
 
-console.log(" In order Traversal");
-Traversal(root);
-
-// levelOrder
-
-function levelOrder(root) {
-
-    const queue = [];
-    queue.push(root);
-
-    while(queue.length > 0 ) {
-
-        const current = queue.shift();
-
-        console.log(current.value);
-
-        if(current.left !== null) {
-            queue.push(current.left);
+        if(this.root === null) {
+            this.root =  newNode;
+            return;
         }
 
-        if(current.right !== null) {
-            queue.push(current.right);
+        let currentRoot = this.root;
+
+        while(true) {
+            if(value < currentRoot.value) {
+                if(currentRoot.left !== null ) {
+                    currentRoot = currentRoot.left;
+                } else {
+                    currentRoot.left = newNode;
+                    break;
+                }
+            } else if( value > currentRoot.value) {
+                 if(currentRoot.right !== null ) {
+                    currentRoot = currentRoot.right;
+                 } else {
+                    currentRoot.right = newNode;
+                    break;
+                 }
+            }
         }
     }
 }
 
-levelOrder(root);
+const bst = new BinarySearchTree();
+bst.insert(10);
+bst.insert(5);  
+bst.insert(15); 
+bst.insert(2);  
+bst.insert(7);  
 
+console.log("--- BST Insertion Check ---");
+console.log("Root:", bst.root.value);
+console.log("Root's Right:", bst.root.right?.value); 
+console.log("Root's Left -> Right:", bst.root.left?.right?.value);
